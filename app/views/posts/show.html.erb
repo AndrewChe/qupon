@@ -1,0 +1,8 @@
+<div class="entry">
+  <p><%= @post.title %></p>
+  <p><%= @post.body %></p>
+  <p><%= "posted by #{@post.user}" %></p>
+  <%= link_to 'Edit post', {action: "edit", id: @post.id}, controller: :posts if current_user == @post.user %>
+  <%= button_to("Delete post", {action: "destroy", id: @post.id}, method: :delete, data: { confirm: 'Are you sure?' }) if current_user == @post.user %>
+  <p>---------------------</p>
+</div>

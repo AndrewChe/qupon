@@ -1,4 +1,43 @@
 Qap::Application.routes.draw do
+  get "session/new"
+
+  get "session/create"
+
+  get "session/destroy"
+
+  #get "posts/create"
+  #
+  #get "posts/show"
+  #
+  #get "posts/edit"
+  #
+  #get "posts/new"
+  #
+  #get "posts/index"
+  #
+  #get "posts/update"
+  #
+  #get "posts/destroy"
+
+  #get "users/create"
+  #
+  #get "users/index"
+  #
+  #get "users/show"
+  #
+  #get "users/edit"
+  #
+  #get "users/new"
+  #
+  #get "users/update"
+  #
+  #get "users/destroy"
+
+  resources :users
+  resources :posts
+
+  root to: 'posts#index', as: '/'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

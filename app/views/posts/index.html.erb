@@ -1,0 +1,18 @@
+<% if notice %>
+    <p id="notice"><%= notice %></p>
+<% end %>
+
+
+<h1>Posts</h1>
+
+<%= link_to("Create post", new_post_path) if signed_in? %>
+
+<% @posts.each do |post| %>
+    <div class="entry">
+      <p><%= link_to post.title, post %></p>
+      <%= sanitize(post.body) %>
+      <p><%= post.user %></p>
+      <%= button_to("Delete post", post, method: :delete, data: { confirm: 'Are you sure?' }) if current_user == post.user %>
+      <p>---------------------</p>
+    </div>
+<% end %>
