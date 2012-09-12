@@ -1,19 +1,13 @@
 <% if notice %>
     <p id="notice"><%= notice %></p>
 <% end %>
-
-
-<h1>Posts</h1>
-
-<%= link_to("Create post", new_post_path) if signed_in? %>
+<div class="row">
+    <div class="span4"><h1>Posts</h1></div>
+    <div class="span2 offset6">
+        <%= link_to("Create post", new_post_path) if signed_in? %>
+    </div>
+</div>
 
 <% @posts.each do |post| %>
-    <div class="entry">
-      <p><%= link_to post.title, post %></p>
-      <div class = "post_body"><%= raw(truncate(@markdown.render(post.body), length: 200))%></div>
-      <p><%= render :partial => "posts/author_help", locals: { post: post } %></p>
-      <p>Comments: <%= post.posts.length %></p>
-      <%= button_to("Delete post", post, method: :delete, data: { confirm: 'Are you sure?' }) if current_user == post.user %>
-      <p>---------------------</p>
-    </div>
+    <%= render partial: "posts/short_post_partial", locals: {post: post} %>
 <% end %>

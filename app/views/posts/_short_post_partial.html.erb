@@ -1,0 +1,13 @@
+<div class="span6">
+  <div class="row show-grid">
+    <%= link_to post.title, post %>
+    <div class="row">
+      <div class="span9">
+        <%= raw(truncate(@markdown.render(post.body), length: 200))%>
+      </div>
+      <div class="span1 offset10">Comments: <%= post.posts.length %></div>
+    </div>
+    <p><%= render :partial => "posts/author_help", locals: { post: post } %></p>
+  <%= button_to("Delete post", post, method: :delete, data: { confirm: 'Are you sure?' }) if current_user == post.user %>
+    </div>
+</div>
