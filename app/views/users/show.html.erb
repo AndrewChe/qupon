@@ -1,2 +1,23 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<p>Name: <%= @user.name %></p>
+<p>Last Name: <%= @user.last_name %></p>
+<p>Nickname:<%= @user.nick_name %></p>
+<p>Posts:</p>
+Posts:
+<% @posts.each do |post| %>
+    <div class="entry">
+      <p><%= link_to post.title, post %></p>
+      <div class = "post_body"><%= raw(truncate(@markdown.render(post.body), length: 200))%></div>
+      <p><%= render :partial => "posts/author_help", locals: { post: post } %></p>
+      <%= button_to("Delete post", post, method: :delete, data: { confirm: 'Are you sure?' }) if current_user == post.user %>
+      <p>---------------------</p>
+    </div>
+<% end %>
+Comments:
+<% @comments.each do |comment| %>
+    <div class="entry">
+      <p>Comment to: <%= link_to comment.post.title, comment.post %></p>
+      <div class = "post_body"><%= raw(truncate(@markdown.render(comment.body), length: 200))%></div>
+      <%= button_to("Delete post", comment, method: :delete, data: { confirm: 'Are you sure?' }) if current_user == comment.user %>
+      <p>---------------------</p>
+    </div>
+<% end %>

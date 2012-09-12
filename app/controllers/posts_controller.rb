@@ -2,23 +2,14 @@ class PostsController < ApplicationController
   before_filter :authorize
 
   before_filter :find_by_id, only: [:show, :edit, :destroy, :update]
+  before_filter :create_markdown, only: [:show, :index]
 
   def create
-    @post = Post.create(params[:post])
-    @post.user_id = current_user.id
-
-    respond_to do |format|
-      if @post.save
-        format.html { redirect_to '/', notice: 'Post #{ @post.title} was successfully created.' }
-      else
-        format.html { render action: "new" }
-      end
-    end
+    create_post
   end
 
   def index
-    @posts = Post.all
-
+    @posts = Post.where("post_type = 'post'")
   end
 
   def new
@@ -26,6 +17,8 @@ class PostsController < ApplicationController
   end
 
   def show
+    post_not_comment(@post)
+    @comment = Post.new(title: "comment", post_id: @post.id)
   end
 
   def edit
@@ -35,7 +28,7 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update_attributes(params[:post])
-        format.html { redirect_to '/', notice: "Post #{@post.title} was successfully edited." }
+        successful_create_update(format)
       else
         format.html { render action: "edit" }
       end
@@ -46,12 +39,43 @@ class PostsController < ApplicationController
     @post.destroy
 
     respond_to do |format|
-      format.html { redirect_to "/" }
+      if @post.comment?
+        format.html { redirect_to @post.post }
+      else
+        format.html { redirect_to '/' }
+      end
     end
   end
 
   private
   def find_by_id
-    @post = Post.find(params[:id])
+    @post = Post.find(params[:id]) || not_found
+  end
+
+  def create_post
+    @post = Post.create(params[:post])
+    @post.user_id = current_user.id
+
+    respond_to do |format|
+      if @post.save
+        successful_create_update(format)
+      else
+        format.html { render action: "new" }
+      end
+    end
+  end
+
+  def successful_create_update(format)
+    if @post.comment?
+      format.html { redirect_to @post.post, notice: "Comment was successfully edited." }
+    else
+      format.html { redirect_to @post, notice: "Post #{@post.title} was successfully edited." }
+    end
+  end
+
+  def post_not_comment(post)
+    if (post.comment?)
+      not_found
+    end
   end
 end

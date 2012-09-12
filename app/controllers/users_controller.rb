@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :find_by_id, only: [:show, :edit, :destroy]
-
+  before_filter :create_markdown, only: :show
 
   def create
     @user = User.new(params[:user])
@@ -23,6 +23,8 @@ class UsersController < ApplicationController
   end
 
   def show
+    @posts = @user.posts.where("post_type = 'post'")
+    @comments = @user.posts.where("post_type = 'comment'")
   end
 
   def edit
@@ -39,4 +41,5 @@ class UsersController < ApplicationController
   def find_by_id
     @user = User.find(params[:id])
   end
+
 end

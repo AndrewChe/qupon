@@ -10,8 +10,9 @@
 <% @posts.each do |post| %>
     <div class="entry">
       <p><%= link_to post.title, post %></p>
-      <%= sanitize(post.body) %>
-      <p><%= post.user %></p>
+      <div class = "post_body"><%= raw(truncate(@markdown.render(post.body), length: 200))%></div>
+      <p><%= render :partial => "posts/author_help", locals: { post: post } %></p>
+      <p>Comments: <%= post.posts.length %></p>
       <%= button_to("Delete post", post, method: :delete, data: { confirm: 'Are you sure?' }) if current_user == post.user %>
       <p>---------------------</p>
     </div>

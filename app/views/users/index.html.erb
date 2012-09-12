@@ -1,3 +1,19 @@
 <% if notice %>
     <p id="notice"><%= notice %></p>
 <% end %>
+
+<h1>Users</h1>
+<table>
+  <tr>
+    <td>Name</td>
+    <td>Last name</td>
+    <td>Nickname</td>
+  </tr>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= link_to user.name, user %></td>
+      <td><%= user.last_name %></td>
+      <td><%= user.nick_name %></td>
+    </tr>
+  <% end %>
+</table>
