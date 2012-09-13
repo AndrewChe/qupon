@@ -3,58 +3,10 @@ class PostsController < ApplicationController
 
   before_filter :find_post, only: [:show, :edit, :destroy, :update]
   before_filter :create_markdown, only: [:show, :index]
+  before_filter :build_comment, only: [:show]
 
   def create
-    create_post
-  end
-
-  def index
-    @posts = Post.where("post_type = 'post'")
-  end
-
-  def new
-    @post = Post.new
-  end
-
-  def show
-    post_not_comment(@post)
-    @comment = Post.new(title: "comment", post_id: @post.id)
-  end
-
-  def edit
-  end
-
-  def update
-    respond_to do |format|
-      if @post.update_attributes(params[:post])
-        successful_create_update
-      else
-        format.html { render action: "edit" }
-      end
-    end
-  end
-
-  def destroy
-    @post.destroy
-
-    respond_to do |format|
-      if @post.comment?
-        format.html { redirect_to @post.post }
-      else
-        format.html { redirect_to '/' }
-      end
-    end
-  end
-
-  private
-
-  def find_post
-    @post = Post.find(params[:id]) || not_found
-  end
-
-  def create_post
-    @post = Post.new(params[:post])
-    @post.user_id = current_user.id
+    @post = current_user.publish(params[:post])
 
     if @post.save
       successful_create_update
@@ -63,17 +15,46 @@ class PostsController < ApplicationController
     end
   end
 
-  def successful_create_update
-    if @post.comment?
-      redirect_to @post.post, notice: "Comment was successfully edited."
+  def index
+    @posts = Post.all
+  end
+
+  def new
+    @post = Post.new
+  end
+
+  def show
+  end
+
+  def edit
+  end
+
+  def update
+    if @post.update_attributes(params[:post])
+      successful_create_update
     else
-      redirect_to @post, notice: "Post #{@post.title} was successfully edited."
+      render "edit"
     end
   end
 
-  def post_not_comment(post)
-    if post.comment?
-      not_found
-    end
+  def destroy
+    @post.destroy
+
+    redirect_to root_url
   end
+
+  private
+
+  def find_post
+    @post = Post.find(params[:id]) || not_found
+  end
+
+  def successful_create_update
+    redirect_to @post, notice: "Post #{@post.title} was successfully edited."
+  end
+
+  def build_comment
+    @comment = Comment.new({post: @post}, without_protection: true)
+  end
+
 end

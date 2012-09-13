@@ -6,4 +6,8 @@ class User < ActiveRecord::Base
   has_many :posts
 
   validates :name, presence: true
+
+  def publish(params)
+    self.posts.new(params)
+  end
 end

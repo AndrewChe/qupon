@@ -1,11 +1,11 @@
 class Post < ActiveRecord::Base
-  attr_accessible :body, :title, :post_type, :user_id, :user, :post, :posts, :post_id
+  attr_accessible :body, :title
   belongs_to :user
-  has_many :posts
-  belongs_to :post
+  has_many :comments
 
   validates :title, :body, presence: true
   validates :title, length: { :maximum => 100 }
+  validates :user_id, presence: true
 
   def comment?
     post_type == "comment"
