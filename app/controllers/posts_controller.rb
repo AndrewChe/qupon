@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_filter :authorize
 
-  before_filter :find_by_id, only: [:show, :edit, :destroy, :update]
+  before_filter :find_post, only: [:show, :edit, :destroy, :update]
   before_filter :create_markdown, only: [:show, :index]
 
   def create
@@ -22,13 +22,12 @@ class PostsController < ApplicationController
   end
 
   def edit
-
   end
 
   def update
     respond_to do |format|
       if @post.update_attributes(params[:post])
-        successful_create_update(format)
+        successful_create_update
       else
         format.html { render action: "edit" }
       end
@@ -48,33 +47,32 @@ class PostsController < ApplicationController
   end
 
   private
-  def find_by_id
+
+  def find_post
     @post = Post.find(params[:id]) || not_found
   end
 
   def create_post
-    @post = Post.create(params[:post])
+    @post = Post.new(params[:post])
     @post.user_id = current_user.id
 
-    respond_to do |format|
-      if @post.save
-        successful_create_update(format)
-      else
-        format.html { render action: "new" }
-      end
+    if @post.save
+      successful_create_update
+    else
+      render "new"
     end
   end
 
-  def successful_create_update(format)
+  def successful_create_update
     if @post.comment?
-      format.html { redirect_to @post.post, notice: "Comment was successfully edited." }
+      redirect_to @post.post, notice: "Comment was successfully edited."
     else
-      format.html { redirect_to @post, notice: "Post #{@post.title} was successfully edited." }
+      redirect_to @post, notice: "Post #{@post.title} was successfully edited."
     end
   end
 
   def post_not_comment(post)
-    if (post.comment?)
+    if post.comment?
       not_found
     end
   end

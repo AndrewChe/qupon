@@ -5,6 +5,7 @@ class Post < ActiveRecord::Base
   belongs_to :post
 
   validates :title, :body, presence: true
+  validates :title, length: { :maximum => 100 }
 
   def comment?
     post_type == "comment"

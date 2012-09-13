@@ -1,23 +1,47 @@
-<p>Name: <%= @user.name %></p>
-<p>Last Name: <%= @user.last_name %></p>
-<p>Nickname:<%= @user.nick_name %></p>
-<p>Posts:</p>
-Posts:
-<% @posts.each do |post| %>
-    <div class="entry">
-      <p><%= link_to post.title, post %></p>
-      <div class = "post_body"><%= raw(truncate(@markdown.render(post.body), length: 200))%></div>
-      <p><%= render :partial => "posts/author_help", locals: { post: post } %></p>
-      <%= button_to("Delete post", post, method: :delete, data: { confirm: 'Are you sure?' }) if current_user == post.user %>
-      <p>---------------------</p>
-    </div>
-<% end %>
-Comments:
-<% @comments.each do |comment| %>
-    <div class="entry">
-      <p>Comment to: <%= link_to comment.post.title, comment.post %></p>
-      <div class = "post_body"><%= raw(truncate(@markdown.render(comment.body), length: 200))%></div>
-      <%= button_to("Delete post", comment, method: :delete, data: { confirm: 'Are you sure?' }) if current_user == comment.user %>
-      <p>---------------------</p>
-    </div>
-<% end %>
+<%- model_class = User -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+</div>
+
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              url_for(:back), :class => 'btn'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_user_path(@user), :class => 'btn' if @user == current_user%>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+  <dd><%= @user.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:last_name) %>:</strong></dt>
+  <dd><%= @user.last_name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:nick_name) %>:</strong></dt>
+  <dd><%= @user.nick_name %></dd>
+</dl>
+<div class="clearfix"></div>
+<div class="form-actions"></div>
+
+<div class="row">
+  <div class="span4">
+    <% @posts.each do |post| %>
+        <div class="entry">
+          <p><%= link_to post.title, post %></p>
+          <div class = "post_body"><%= raw(truncate(@markdown.render(post.body), length: 200))%></div>
+          <p><%= render :partial => "posts/author_help", locals: { post: post } %></p>
+          <%= button_to("Delete post", post, method: :delete, data: { confirm: 'Are you sure?' }) if current_user == post.user %>
+          <p>---------------------</p>
+        </div>
+    <% end %>
+  </div>
+
+  <div class="span4">
+    <% @comments.each do |comment| %>
+        <div class="entry">
+          <p>Comment to: <%= link_to comment.post.title, comment.post %></p>
+          <div class = "post_body"><%= raw(truncate(@markdown.render(comment.body), length: 200))%></div>
+          <%= button_to("Delete post", comment, method: :delete, data: { confirm: 'Are you sure?' }) if current_user == comment.user %>
+          <p>---------------------</p>
+        </div>
+    <% end %>
+  </div>
+</div>

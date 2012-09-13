@@ -1,13 +1,15 @@
-<div class="span6">
+<div class="well well-small">
+    <blockquote>
+    <div class="span11">
+      <%= link_to post.title, post %>
+    </div>
+      <abbr title="commentaries"><span class="badge badge-info"><%= post.posts.length %></span></abbr>
+  </blockquote>
   <div class="row show-grid">
-    <%= link_to post.title, post %>
-    <div class="row">
-      <div class="span9">
-        <%= raw(truncate(@markdown.render(post.body), length: 200))%>
-      </div>
-      <div class="span1 offset10">Comments: <%= post.posts.length %></div>
+    <div class="span10">
+      <%= raw(truncate(@markdown.render(post.body), length: 200))%>
     </div>
-    <p><%= render :partial => "posts/author_help", locals: { post: post } %></p>
-  <%= button_to("Delete post", post, method: :delete, data: { confirm: 'Are you sure?' }) if current_user == post.user %>
-    </div>
+  </div>
+  <%= button_to("Delete", post, method: :delete, class: "btn btn-danger btn-mini", data: { confirm: 'Are you sure?' }) if current_user == post.user %>
+  <p><%= render :partial => "posts/author_help", locals: { post: post } %></p>
 </div>

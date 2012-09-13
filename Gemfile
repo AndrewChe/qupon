@@ -40,6 +40,9 @@ gem 'unicorn'
 
 # To use debugger
 # gem 'debugger'
+group :development do
+  gem 'rails_best_practices'
+end
 
 group :development, :test do
   gem 'rspec-rails'

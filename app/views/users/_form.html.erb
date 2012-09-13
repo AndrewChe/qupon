@@ -1,43 +1,38 @@
-<div class="qap_form">
+<%= form_for @user, :html => { :class => 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= f.label :name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :last_name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :last_name, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :nick_name, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :nick_name, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :email, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :email, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :password, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :password, :class => 'text_field' %>
+    </div>
+  </div>
 
-  <%= form_for @user do |f| %>
-      <% if @user.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(@user.errors.count, "error") %>
-              prohibited this user from being saved:</h2>
-            <ul>
-              <% @user.errors.full_messages.each do |msg| %>
-                  <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-      <% end %>
-
-      <fieldset>
-        <legend>Enter User Details</legend>
-
-        <div>
-          <%= f.label :name %>:
-          <%= f.text_field :name, size: 40 %>
-        </div>
-
-        <div>
-          <%= f.label :email %>:
-          <%= f.text_field :email, size: 40 %>
-        </div>
-
-        <div>
-          <%= f.label :password, 'Password' %>:
-          <%= f.password_field :password, size: 40 %>
-        </div>
-
-
-
-        <div>
-          <%= f.submit %>
-        </div>
-
-      </fieldset>
-  <% end %>
-
-</div>
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                url_for(:back), :class => 'btn' %>
+  </div>
+<% end %>

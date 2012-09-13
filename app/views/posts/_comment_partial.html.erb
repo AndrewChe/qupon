@@ -1,0 +1,10 @@
+<div class="well">
+    <%= raw(@markdown.render(comment.body)) %>
+  <p><%= render :partial => "posts/author_help", locals: { post: comment } %></p>
+<% if current_user == comment.user %>
+        <div class="btn-toolbar">
+          <%= link_to 'Edit', {action: "edit", id: comment.id}, class: "btn btn-warning btn-mini", controller: :posts  %>
+          <%= link_to("Delete", {action: "destroy", id: comment.id}, class: "btn btn-danger btn-mini", method: :delete, data: { confirm: 'Are you sure?' }) %>
+        </div>
+<% end %>
+</div>

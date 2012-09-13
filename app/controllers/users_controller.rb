@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_filter :authorize
   before_filter :find_by_id, only: [:show, :edit, :destroy]
   before_filter :create_markdown, only: :show
 
