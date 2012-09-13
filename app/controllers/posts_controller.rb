@@ -24,6 +24,7 @@ class PostsController < ApplicationController
   end
 
   def show
+    @comments = @post.comments
   end
 
   def edit
@@ -38,9 +39,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post.destroy
-
-    redirect_to root_url
+    redirect_to @post.delete(current_user) ?  posts_path : @post
   end
 
   private
@@ -54,7 +53,7 @@ class PostsController < ApplicationController
   end
 
   def build_comment
-    @comment = Comment.new({post: @post}, without_protection: true)
+    @comment = Comment.new({post: @post, user: current_user}, without_protection: true)
   end
 
 end

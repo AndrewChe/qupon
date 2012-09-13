@@ -1,0 +1,11 @@
+<%= form_for [@post, @comment], :html => { :class => 'form-horizontal' } do |f| %>
+    <div class="span6">
+        <div class="control-group">
+            <div class="controls">
+                <%= f.text_area :body, rows: 4 %>
+                <%= f.submit "Leave comment", :class => 'btn btn-primary' %>
+            </div>
+        </div>
+    </div>
+<% end %>
+

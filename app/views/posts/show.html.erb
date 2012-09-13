@@ -7,17 +7,19 @@
     <p id= "post_body"><%= raw(@markdown.render(@post.body)) %></p>
   </div>
 <div class="span12">
+    <% if current_user == @post.user %>
     <div class="btn-toolbar">
-      <%= link_to 'Edit', {action: "edit", id: @post.id}, controller: :posts, class: "btn btn-warning btn-mini" if current_user == @post.user %>
-      <%= link_to("Delete", @post, method: :delete, class: "btn btn-danger btn-mini", data: { confirm: 'Are you sure?' }) if current_user == @post.user %>
+      <%= link_to 'Edit', {action: "edit", id: @post.id}, controller: :posts, class: "btn btn-warning btn-mini" %>
+      <%= link_to("Delete", @post, method: :delete, class: "btn btn-danger btn-mini", data: { confirm: 'Are you sure?' }) %>
     </div>
+    <% end %>
   <p><%= render :partial => "posts/author_help", locals: { post: @post } %></p>
 </div>
 
 <div class="span11">
   Comments:
-  <% @post.posts.each do |comment| %>
+  <% @comments.each do |comment| %>
       <%= render :partial => "posts/comment_partial", locals: { comment: comment } %>
   <% end %>
-  <%= render 'posts/comment_form' %>
+  <%= render 'comments/form' %>
 </div>

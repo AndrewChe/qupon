@@ -1,8 +1,3 @@
 <h1>Edit post</h1>
 
-<% if @post.post_type == "post" %>
-    <%= render 'posts/form' %>
-<% else %>
-    <% @comment = @post %>
-    <%= render 'posts/comment_form' %>
-<% end %>
+<%= render 'posts/form' %>

@@ -1,18 +1,17 @@
 class UsersController < ApplicationController
-  before_filter :authorize
-  before_filter :find_by_id, only: [:show, :edit, :destroy]
+  before_filter :authorize, except: [:new, :create]
+  before_filter :find_user, only: [:show, :edit, :destroy]
   before_filter :create_markdown, only: :show
 
   def create
     @user = User.new(params[:user])
 
-    respond_to do |format|
       if @user.save
-        format.html { redirect_to users_url, notice: 'User #{ @user.name} was successfully created.' }
+        sign_in(@user)
+        redirect_to posts_path, notice: 'User #{ @user.name} was successfully created.'
       else
-        format.html { render action: "new" }
+        render action: "new"
       end
-    end
   end
 
   def new
@@ -24,8 +23,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    @posts = @user.posts.where("post_type = 'post'")
-    @comments = @user.posts.where("post_type = 'comment'")
+    @posts = @user.posts
+    @comments = @user.comments
   end
 
   def edit
@@ -39,7 +38,7 @@ class UsersController < ApplicationController
 
   private
 
-  def find_by_id
+  def find_user
     @user = User.find(params[:id])
   end
 

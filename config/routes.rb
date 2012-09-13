@@ -1,40 +1,22 @@
 Qap::Application.routes.draw do
+  #get "comments/create"
+  #
+  #get "comments/destroy"
+  #
+  #get "comments/update"
+  #
+  get "comments/edit"
+
   get "session/new"
 
   get "session/create"
 
   get "session/destroy"
 
-  #get "posts/create"
-  #
-  #get "posts/show"
-  #
-  #get "posts/edit"
-  #
-  #get "posts/new"
-  #
-  #get "posts/index"
-  #
-  #get "posts/update"
-  #
-  #get "posts/destroy"
-
-  #get "users/create"
-  #
-  #get "users/index"
-  #
-  #get "users/show"
-  #
-  #get "users/edit"
-  #
-  #get "users/new"
-  #
-  #get "users/update"
-  #
-  #get "users/destroy"
-
   resources :users
-  resources :posts
+  resources :posts do
+    resources :comments
+  end
 
   root to: 'posts#index', as: '/'
 
