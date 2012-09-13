@@ -8,6 +8,6 @@ class User < ActiveRecord::Base
   validates :name, presence: true
 
   def publish(params)
-    self.posts.new(params)
+    self.posts.create(params)
   end
 end

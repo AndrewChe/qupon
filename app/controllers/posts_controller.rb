@@ -8,7 +8,7 @@ class PostsController < ApplicationController
   def create
     @post = current_user.publish(params[:post])
 
-    if @post.save
+    if @post.persisted?
       successful_create_update
     else
       render "new"
