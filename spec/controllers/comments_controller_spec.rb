@@ -2,25 +2,25 @@ require 'spec_helper'
 
 describe CommentsController do
 
+  let!(:pupkin) { create(:user) }
+  let!(:article) { create(:post, user: pupkin) }
+
+
+  before(:each) do
+    sign_in_as(pupkin)
+  end
+
   describe "GET 'create'" do
-    it "returns http success" do
-      get 'create'
-      response.should be_success
-    end
-  end
 
-  describe "GET 'destroy'" do
-    it "returns http success" do
-      get 'destroy'
-      response.should be_success
+    def do_comment(attrs = { })
+      options =  { body: "Body body" }.merge(attrs)
+      post :create, {comment: options}.merge( post_id: article.id)
     end
-  end
 
-  describe "GET 'update'" do
-    it "returns http success" do
-      get 'update'
-      response.should be_success
-    end
+    context "when comment params are valid"
+      it "should create user's comment" do
+        expect { do_comment }.to change { pupkin.comments.count }.by(1)
+      end
   end
 
 end

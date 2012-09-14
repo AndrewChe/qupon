@@ -4,13 +4,14 @@ require 'factories/factories'
 describe PostsController do
   let!(:pupkin) { create(:user) }
   let!(:article) { create(:post, user: pupkin) }
+  let!(:comment) { create(:comment, post: article, user: pupkin)}
 
   before(:each) do
     sign_in_as(pupkin)
   end
 
   describe "index" do
-    it "should show all posts that isn't comment" do
+    it "should show all posts" do
       get :index
       assigns(:posts).should eq([article])
     end
@@ -20,6 +21,7 @@ describe PostsController do
     it "should show post with comments" do
       get :show, { id: article.id }
       assigns(:post).should eq(article)
+      assigns(:comments).should eq([comment])
     end
   end
 
