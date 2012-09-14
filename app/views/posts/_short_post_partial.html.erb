@@ -3,8 +3,8 @@
     <div class="span11">
       <%= link_to post.title, post %>
     </div>
-      <abbr title="commentaries"><span class="badge badge-info"><%= post.comments.length %></span></abbr>
-  </blockquote>
+        <abbr title="commentaries"><span class="badge badge-info"><%= post.comments.length %></span></abbr>
+    </blockquote>
   <div class="row show-grid">
     <div class="span10">
       <%= raw(truncate(@markdown.render(post.body), length: 200))%>

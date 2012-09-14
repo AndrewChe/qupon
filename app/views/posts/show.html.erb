@@ -16,10 +16,13 @@
   <p><%= render :partial => "posts/author_help", locals: { post: @post } %></p>
 </div>
 
+
 <div class="span11">
   Comments:
   <% @comments.each do |comment| %>
       <%= render :partial => "posts/comment_partial", locals: { comment: comment } %>
   <% end %>
-  <%= render 'comments/form' %>
+    <% will_paginate @comments %>
+
+    <%= render 'comments/form' %>
 </div>

@@ -16,7 +16,7 @@ class PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.all
+    @posts = Post.paginate(page: params[:page])
   end
 
   def new
@@ -24,7 +24,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @comments = @post.comments
+    @comments = @post.comments.paginate(page: params[:page])
   end
 
   def edit

@@ -11,6 +11,8 @@ gem 'clearance', '1.0.0.rc1', :git => 'https://github.com/thoughtbot/clearance.g
 
 gem 'redcarpet'
 
+gem 'will_paginate'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

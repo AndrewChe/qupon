@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment.destroy
+    @comment.delete(current_user)
     redirect_to_post
   end
 
@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
   end
 
   def update
-    @comment.update_attributes(params[:comment])
+    @comment.edit_comment(current_user, params[:comment])
     redirect_to_post
   end
 
