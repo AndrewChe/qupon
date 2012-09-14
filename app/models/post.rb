@@ -11,10 +11,7 @@ class Post < ActiveRecord::Base
 
 
   def delete(current_user)
-    if user==current_user
-      self.destroy
-    end
-    false
+    self.destroy    if user==current_user
   end
 
   private

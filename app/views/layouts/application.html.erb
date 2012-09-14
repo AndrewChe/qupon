@@ -42,13 +42,13 @@
           <li><a href="/users">Users</a></li>
 
         </ul>
-        <div class="span2 offset9">
-          <% if signed_in? %>
-              <%= link_to 'Sign out', sign_out_path, :method => :delete %>
-              <%= "Hi, #{current_user.name}" %>
-          <% else %>
-              <%= link_to 'Sign in', sign_in_path  %>
-          <% end %>
+              <div class="span3 offset6">
+              <% if signed_in? %>
+                <%= link_to 'Sign out', sign_out_path, :method => :delete %>
+                <%= "Hi, #{current_user.name}" %>
+            <% else %>
+                <%= link_to 'Sign in', sign_in_path  %>
+            <% end %>
         </div>
       </div><!--/.nav-collapse -->
     </div>
