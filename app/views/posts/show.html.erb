@@ -20,9 +20,9 @@
 <div class="span11">
   Comments:
   <% @comments.each do |comment| %>
-      <%= render :partial => "posts/comment_partial", locals: { comment: comment } %>
+      <%= render "posts/comment_partial", comment: comment %>
   <% end %>
-    <% will_paginate @comments %>
+    <%= will_paginate @comments %>
 
     <%= render 'comments/form' %>
 </div>

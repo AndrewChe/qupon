@@ -12,8 +12,11 @@ class User < ActiveRecord::Base
     self.posts.create(params)
   end
 
-  def leave_comment(params)
-    self.comments.create(params, without_protection: true)
+  def leave_comment(comment_params, post)
+    self.comments.build(comment_params).tap do |comment|
+      comment.post = post
+      comment.save
+    end
   end
 
 end

@@ -6,7 +6,7 @@ class Post < ActiveRecord::Base
   before_destroy :ensure_have_not_comments
 
   validates :title, :body, presence: true
-  validates :title, length: { :maximum => 100 }
+  validates :title, length: { maximum: 100 }
   validates :user_id, presence: true
 
   self.per_page = 3

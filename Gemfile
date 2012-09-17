@@ -44,6 +44,7 @@ gem 'unicorn'
 # gem 'debugger'
 group :development do
   gem 'rails_best_practices'
+  gem 'quiet_assets'
 end
 
 group :development, :test do

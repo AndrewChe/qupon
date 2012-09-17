@@ -2,6 +2,9 @@
     <blockquote>
         <div class="span11">
             <!-- link_to post.title, post -->
+            <% if comment.post %>
+            <%= link_to comment.parent_post_title, comment.post %>
+                <% end %>
         </div>
         <!--%= render :partial => "posts/author_help", locals: { post: post } %-->
     </blockquote>

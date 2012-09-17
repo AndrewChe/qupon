@@ -1,9 +1,10 @@
 class CommentsController < ApplicationController
+  before_filter :find_post
   before_filter :find_comment, only: [:destroy, :update, :edit]
 #  after_filter :redirect_to_post, only: [:destroy, :update]
 
   def create
-    @comment = current_user.leave_comment(params[:comment].merge(post_id: params[:post_id]))
+    @comment = current_user.leave_comment(params[:comment], @post)
     redirect_to_post
   end
 
@@ -25,6 +26,10 @@ class CommentsController < ApplicationController
 
   def find_comment
     @comment = Comment.find(params[:id])
+  end
+
+  def find_post
+    @post = Post.find(params[:post_id])
   end
 
   def redirect_to_post

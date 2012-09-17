@@ -5,14 +5,21 @@ class Comment < ActiveRecord::Base
 
   validates :body, presence: true
 
-  self.per_page = 15
+  self.per_page = 5
 
   def edit_comment(current_user, comment_params)
-    self.update_attributes(comment_params) if self.user==current_user
+    self.update_attributes(comment_params) if author?(current_user)
+  end
+
+  def author?(user)
+    self.user == user
   end
 
   def delete(current_user)
-    self.destroy if user==current_user
+    self.destroy if author?(current_user)
   end
 
+  def parent_post_title
+    post.title
+  end
 end
