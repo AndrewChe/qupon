@@ -9,10 +9,19 @@ class Post < ActiveRecord::Base
   validates :title, length: { maximum: 100 }
   validates :user_id, presence: true
 
-  self.per_page = 3
+  self.per_page = 10
 
   def delete(current_user)
     self.destroy    if user==current_user
+  end
+
+  def delete_by_admin
+    comments.destroy_all
+    self.destroy
+  end
+
+  def update_by_admin(options)
+    self.update_attributes(options)
   end
 
   private

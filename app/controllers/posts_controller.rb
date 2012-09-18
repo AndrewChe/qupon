@@ -28,6 +28,7 @@ class PostsController < ApplicationController
   end
 
   def edit
+    redirect_to @post unless @post.user==current_user
   end
 
   def update

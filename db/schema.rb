@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120913074348) do
+ActiveRecord::Schema.define(:version => 20120918061214) do
 
   create_table "comments", :force => true do |t|
     t.string   "body",       :null => false
@@ -37,13 +37,14 @@ ActiveRecord::Schema.define(:version => 20120913074348) do
     t.string   "last_name"
     t.string   "nick_name"
     t.string   "photo"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
     t.string   "email"
     t.string   "encrypted_password", :limit => 128
     t.string   "salt",               :limit => 128
     t.string   "confirmation_token", :limit => 128
     t.string   "remember_token",     :limit => 128
+    t.boolean  "admin",                             :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

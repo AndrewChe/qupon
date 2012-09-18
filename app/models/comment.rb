@@ -22,4 +22,13 @@ class Comment < ActiveRecord::Base
   def parent_post_title
     post.title
   end
+
+  def update_by_admin(options = {})
+    self.update_attributes(options)
+
+  end
+
+  def delete_by_admin
+    self.destroy
+  end
 end

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :authorize, except: [:new, :create]
-  before_filter :find_user, only: [:show, :edit, :destroy]
+  before_filter :find_user, only: [:show, :edit, :destroy, :update]
   before_filter :create_markdown, only: :show
 
   def create
@@ -31,6 +31,11 @@ class UsersController < ApplicationController
   end
 
   def update
+    if @user.update_attributes(params[:user])
+      redirect_to users_path(@user)
+    else
+      render "edit"
+    end
   end
 
   def destroy

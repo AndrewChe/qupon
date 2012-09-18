@@ -10,7 +10,7 @@ describe User do
   end
 
   it "should leave comment" do
-    expect { pupkin.leave_comment(body: "some comment", post: article) }.to change { Comment.count }.by(1)
+    expect { pupkin.leave_comment({body: "some comment"}, article) }.to change { Comment.count }.by(1)
   end
 
 end

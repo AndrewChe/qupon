@@ -1,9 +1,9 @@
 <div class="well well-small">
     <blockquote>
     <div class="span11">
-      <%= link_to post.title, post %>
+      <%= link_to post.title, defined?(admin) ? [:admin, post] : post %>
     </div>
-        <abbr title="commentaries"><span class="badge badge-info"><%= post.comments.length %></span></abbr>
+        <abbr title="commentaries"><span class="badge badge-info"><%= post.comments.size %></span></abbr>
     </blockquote>
   <div class="row show-grid">
     <div class="span10">

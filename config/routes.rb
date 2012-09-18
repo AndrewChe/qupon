@@ -1,10 +1,5 @@
 Qap::Application.routes.draw do
-  #get "comments/create"
-  #
-  #get "comments/destroy"
-  #
-  #get "comments/update"
-  #
+
   get "comments/edit"
 
   get "session/new"
@@ -16,6 +11,10 @@ Qap::Application.routes.draw do
   resources :users
   resources :posts do
     resources :comments
+  end
+
+  namespace :admin do
+    resources :posts, :comments, :users
   end
 
   root to: 'posts#index', as: '/'

@@ -1,0 +1,36 @@
+<div class="well well-small">
+    <div class="span11">
+        <p><%= @post.title %></p>
+    </div>
+</div>
+<div class="span10">
+    <p id="post_body"><%= raw(@markdown.render(@post.body)) %></p>
+</div>
+<div class="span12">
+    <p><%= render :partial => "posts/author_help", locals: { post: @post } %></p>
+
+    <div class="well well-small">
+        Admin tools:
+        <div class="btn-toolbar">
+            <%= link_to 'Edit', { action: "edit", id: @post.id }, controller: :admin_posts, class: "btn btn-warning btn-mini" %>
+            <%= link_to("Delete", [:admin, @post], method: :delete, class: "btn btn-danger btn-mini", data: { confirm: 'Are you sure?' }) %>
+        </div>
+    </div>
+</div>
+
+
+    <div class="span11">
+        Comments:
+        <% @comments.each do |comment| %>
+            <div class="well well-small">
+            <%= render "posts/comment_partial", comment: comment %>
+            Admin tools:
+            <div class="btn-toolbar">
+                <%= link_to 'Edit', [:edit, :admin, comment], controller: :admin_comments, class: "btn btn-warning btn-mini" %>
+                <%= link_to("Delete", [:admin, comment], method: :delete, class: "btn btn-danger btn-mini", data: { confirm: 'Are you sure?' }) %>
+            </div>
+        </div>
+    <% end %>
+    <%= will_paginate @comments %>
+
+</div>

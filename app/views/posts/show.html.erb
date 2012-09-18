@@ -24,5 +24,5 @@
   <% end %>
     <%= will_paginate @comments %>
 
-    <%= render 'comments/form' %>
+    <%= render 'comments/form', comment_var: [@post, @comment] %>
 </div>
