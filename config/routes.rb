@@ -1,7 +1,5 @@
 Qap::Application.routes.draw do
 
-  get "comments/edit"
-
   get "session/new"
 
   get "session/create"

@@ -1,0 +1,49 @@
+<%- model_class = User -%>
+<div class="page-header">
+    <h1><%= t '.title', :default => model_class.model_name.human %></h1>
+</div>
+
+<div class="form-actions">
+    <%= link_to t('.back', :default => t("helpers.links.back")),
+                url_for(:back), :class => 'btn' %>
+    <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                edit_admin_user_path(@user), :class => 'btn btn-mini' %>
+</div>
+
+<dl class="dl-horizontal">
+    <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+    <dd><%= @user.name %></dd>
+    <dt><strong><%= model_class.human_attribute_name(:last_name) %>:</strong></dt>
+    <dd><%= @user.last_name %></dd>
+    <dt><strong><%= model_class.human_attribute_name(:nick_name) %>:</strong></dt>
+    <dd><%= @user.nick_name %></dd>
+</dl>
+<div class="clearfix"></div>
+<div class="form-actions"></div>
+
+<div class="row">
+    <div class="span6">
+        <% @posts.each do |post| %>
+            <div class="well well-small">
+                <%= render partial: 'posts/short_post_partial', locals: { post: post } %>
+                Admin tools:
+                <div class="btn-toolbar">
+                    <%= link_to 'Edit', [:edit, :admin, post], controller: :admin_posts, class: "btn btn-warning btn-mini" %>
+                    <%= link_to("Delete", [:admin, post], method: :delete, class: "btn btn-danger btn-mini", data: { confirm: 'Are you sure?' }) %>
+                </div>
+            </div>
+        <% end %>
+    </div>
+    <div class="span6">
+        <% @comments.each do |comment| %>
+            <div class="well well-small">
+                <%= render partial: 'comments/short_comment', locals: { comment: comment, post: comment.post } %>
+                Admin tools:
+                <div class="btn-toolbar">
+                    <%= link_to 'Edit', [:edit, :admin, comment], controller: :admin_comments, class: "btn btn-warning btn-mini" %>
+                    <%= link_to("Delete", [:admin, comment], method: :delete, class: "btn btn-danger btn-mini", data: { confirm: 'Are you sure?' }) %>
+                </div>
+            </div>
+        <% end %>
+    </div>
+</div>
