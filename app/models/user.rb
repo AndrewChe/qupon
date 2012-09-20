@@ -19,9 +19,9 @@ class User < ActiveRecord::Base
     self.posts.create(params)
   end
 
-  def leave_comment(comment_params, post)
+  def leave_comment(comment_params, parent)
     self.comments.build(comment_params).tap do |comment|
-      comment.post = post
+      comment.commentable = parent
       comment.save
     end
   end

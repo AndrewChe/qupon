@@ -34,7 +34,8 @@
   <div class="span6">
       <%= "Comments (#{@comments.size}):" %>
       <% @comments.each do |comment| %>
-        <%=render partial: 'comments/short_comment', locals: {comment: comment, post: comment.post}  %>
+
+          <%=render 'comments/short_comment', {comment: comment, post: comment.post}  %>
     <% end %>
   </div>
 </div>

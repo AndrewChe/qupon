@@ -13,6 +13,10 @@ Qap::Application.routes.draw do
     resources :comments
   end
 
+  resources :comments do
+    resources :comments
+  end
+
   namespace :admin do
     resources :posts, :comments, :users
   end

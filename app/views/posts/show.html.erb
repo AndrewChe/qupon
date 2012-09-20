@@ -20,7 +20,7 @@
 <div class="span11">
   Comments:
   <% @comments.each do |comment| %>
-      <%= render "posts/comment_partial", comment: comment %>
+      <%= render "comments/comment_partial", comment: comment %>
   <% end %>
     <%= will_paginate @comments %>
 

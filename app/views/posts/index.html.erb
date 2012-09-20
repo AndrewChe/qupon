@@ -12,7 +12,7 @@
 
 <% @posts.each do |post| %>
     <div class="container">
-      <%= render partial: "posts/short_post_partial", locals: {post: post} %>
+      <%= render "posts/short_post_partial", post: post %>
     </div>
 <% end %>
 <%= will_paginate @posts %>

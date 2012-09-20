@@ -1,7 +1,7 @@
 class Post < ActiveRecord::Base
   attr_accessible :body, :title
   belongs_to :user
-  has_many :comments
+  has_many :comments, as: :commentable
 
   before_destroy :ensure_have_not_comments
 
@@ -16,7 +16,7 @@ class Post < ActiveRecord::Base
   end
 
   def delete_by_admin
-    comments.destroy_all
+    commentable.destroy_all
     self.destroy
   end
 
@@ -27,7 +27,7 @@ class Post < ActiveRecord::Base
   private
 
   def ensure_have_not_comments
-     if comments.any?
+     if commentable.any?
        errors.add(:base, 'Comments present. You cannot delete post')
        false
      end

@@ -54,7 +54,7 @@ class PostsController < ApplicationController
   end
 
   def build_comment
-    @comment = Comment.new({post: @post, user: current_user}, without_protection: true)
+    @comment = @post.comments.build()
   end
 
 end

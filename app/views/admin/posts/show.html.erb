@@ -23,7 +23,7 @@
         Comments:
         <% @comments.each do |comment| %>
             <div class="well well-small">
-            <%= render "posts/comment_partial", comment: comment %>
+            <%= render "comments/comment_partial", comment: comment %>
             Admin tools:
             <div class="btn-toolbar">
                 <%= link_to 'Edit', [:edit, :admin, comment], controller: :admin_comments, class: "btn btn-warning btn-mini" %>

@@ -1,6 +1,8 @@
 class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :post
+  belongs_to :commentable, polymorphic: true
+  has_many :comments, as: :commentable
   attr_accessible :body
 
   validates :body, presence: true
@@ -20,7 +22,12 @@ class Comment < ActiveRecord::Base
   end
 
   def parent_post_title
-    post.title
+    parent_post.title
+  end
+
+  def post
+    return @post if defined?(@post)
+    @post = commentable.is_a?(Post) ? commentable : commentable.post
   end
 
   def update_by_admin(options = {})
