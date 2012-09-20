@@ -31,28 +31,34 @@ describe Admin::UsersController do
   end
 
   describe "GET 'update'" do
-    context "user is admin"
-    it "should update user params" do
-      sign_in_as(pupkin)
-
-      expect { put :update, id: hacker.id, user: { admin: true } }.to change { User.find(hacker.id).admin }.to(true)
+    def do_update(params = {})
+      put :update, params
     end
 
-    it "should not update last admin for not admin" do
-      sign_in_as(pupkin)
-      expect { put :update, id: pupkin.id, user: { admin: false } }.to_not change { User.find(pupkin.id).admin }.to(false)
+    context "when user is admin" do
+      it "should update user params" do
+        sign_in_as(pupkin)
+
+        expect { do_update id: hacker.id, user: { admin: true } }.to change { User.find(hacker.id).admin }.to(true)
+      end
+
+      it "should not update last admin for not admin" do
+        sign_in_as(pupkin)
+        expect { do_update id: pupkin.id, user: { admin: false } }.to_not change { User.find(pupkin.id).admin }.to(false)
+      end
+
+      it "should update last admin for not admin" do
+        create(:user, email: "new@new.com", admin: true)
+        sign_in_as(pupkin)
+        expect { do_update id: pupkin.id, user: { admin: false } }.to change { User.find(pupkin.id).admin }.to(false)
+      end
     end
 
-    it "should not update last admin for not admin" do
-      create(:user, email: "new@new.com", admin: true)
-      sign_in_as(pupkin)
-      expect { put :update, id: pupkin.id, user: { admin: false } }.to change { User.find(pupkin.id).admin }.to(false)
-    end
-
-    context "user isn't admin"
-    it "should update user params" do
-      sign_in_as(hacker)
-      expect { put :update, id: hacker.id, user: { admin: true } }.to_not change { User.find(hacker.id).admin }.to(true)
+    context "when user isn't admin" do
+      it "should update user params" do
+        sign_in_as(hacker)
+        expect { do_update id: hacker.id, user: { admin: true } }.to_not change { User.find(hacker.id).admin }.to(true)
+      end
     end
   end
 

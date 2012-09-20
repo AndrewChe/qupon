@@ -11,6 +11,8 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+
+
   <style>
       body {
           padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -40,6 +42,9 @@
         <ul class="nav">
           <li class="active"><a href="/">Posts</a></li>
           <li><a href="/users">Users</a></li>
+
+            <!--%= auto_discovery_link_tag(:rss, { controller: "rss_feed", action: "feed" }) %-->
+            <%= (link_to image_tag("rss.png", style: "width: 30px", title: "RSS feed"), rss_feed_feed_url(:rss)) %>
 
         </ul>
               <div class="span3 offset6">

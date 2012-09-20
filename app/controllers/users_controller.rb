@@ -6,12 +6,12 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
 
-      if @user.save
-        sign_in(@user)
-        redirect_to posts_path, notice: 'User #{ @user.name} was successfully created.'
-      else
-        render action: "new"
-      end
+    if @user.save
+      sign_in(@user)
+      redirect_to posts_path, notice: 'User #{ @user.name} was successfully created.'
+    else
+      render "new"
+    end
   end
 
   def new

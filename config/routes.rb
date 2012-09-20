@@ -1,5 +1,7 @@
 Qap::Application.routes.draw do
 
+  get "rss_feed/feed"
+
   get "session/new"
 
   get "session/create"

@@ -5,11 +5,11 @@
 
 <div class="form-actions">
     <%= link_to t('.back', :default => t("helpers.links.back")),
-                url_for(:back), :class => 'btn' %>
+                url_for(:back), :class => 'btn btn-mini' %>
     <%= link_to t('.edit', :default => t("helpers.links.edit")),
                 edit_admin_user_path(@user), :class => 'btn btn-mini' %>
 </div>
-
+<%= image_tag @user.photo.url(:medium) %>
 <dl class="dl-horizontal">
     <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
     <dd><%= @user.name %></dd>
@@ -23,6 +23,7 @@
 
 <div class="row">
     <div class="span6">
+        <%= "Posts (#{@posts.size}):" %>
         <% @posts.each do |post| %>
             <div class="well well-small">
                 <%= render partial: 'posts/short_post_partial', locals: { post: post } %>
@@ -35,6 +36,7 @@
         <% end %>
     </div>
     <div class="span6">
+        <%= "Comments (#{@comments.size}):" %>
         <% @comments.each do |comment| %>
             <div class="well well-small">
                 <%= render partial: 'comments/short_comment', locals: { comment: comment, post: comment.post } %>
