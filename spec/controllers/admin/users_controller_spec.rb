@@ -4,7 +4,7 @@ describe Admin::UsersController do
   let!(:pupkin) { create(:user, admin: true) }
   let!(:hacker) { create(:user, email: "hacker@hack.er") }
   let!(:article) { create(:post, user_id: hacker.id) }
-  let!(:comment) { create(:comment, user_id: hacker.id, post_id: article.id) }
+  let!(:comment) { create(:comment, user_id: hacker.id, commentable: article) }
 
   describe "GET 'index'" do
     it "assigns all users" do

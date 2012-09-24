@@ -1,1 +1,2 @@
-<%= link_to("#{post.user.try(:name)}", post.user, class: "label label-warning") %> </span>
+<%= link_to("#{post.user.try(:name)}", post.user, current_user == post.user ? {class: "label label-success"} :
+                {class: "label label-warning"} ) %>

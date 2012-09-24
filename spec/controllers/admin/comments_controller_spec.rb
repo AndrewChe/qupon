@@ -5,13 +5,14 @@ describe Admin::CommentsController do
   let!(:pupkin) { create(:user, admin: true) }
   let!(:hacker) { create(:user, email: "hacker@hack.er") }
   let!(:article) { create(:post, user_id: hacker.id) }
-  let!(:comment) { create(:comment, user_id: hacker.id, post_id: article.id) }
+  let!(:comment) { create(:comment, user_id: hacker.id, commentable: article) }
+  let!(:reply) { create(:comment, user_id: hacker.id, commentable: comment)}
 
   describe "DESTROY comment" do
     context "user is admin"
     it "should delete comment" do
       sign_in_as(pupkin)
-      expect { delete :destroy, id: article.id }.to change { Comment.count }.by(-1)
+      expect { delete :destroy, id: article.id }.to change { Comment.count }.by(-2)
 
     end
 

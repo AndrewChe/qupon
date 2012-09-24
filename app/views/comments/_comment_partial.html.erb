@@ -9,9 +9,12 @@
                         class: "btn btn-danger btn-mini", data: { confirm: 'Are you sure?' }) %>
         </div>
     <% end %>
+    <%  %>
+    <%= render 'admin/comments/admin_tools', comment: comment if defined?(admin) %>
+
     <%= link_to "Reply", new_comment_comment_path(comment) %>
     <% comment.comments.each do |comment| %>
-        <%= render "comments/comment_partial", comment: comment %>
+            <%= render "comments/comment_partial", comment: comment, admin: true if defined?(admin)  %>
     <% end %>
 </div>
 

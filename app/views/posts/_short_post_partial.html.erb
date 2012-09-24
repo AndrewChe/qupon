@@ -1,15 +1,19 @@
 <div class="well well-small">
     <blockquote>
-    <div class="span11">
-      <%= link_to post.title, defined?(admin) ? [:admin, post] : post %>
-    </div>
-        <abbr title="commentaries"><span class="badge badge-info"><%= post.comments.size %></span></abbr>
+        <abbr title="commentaries"><span class="badge badge-info"><%= post.comments_count %></span></abbr>
+        <div class="span10">
+            <%= link_to post.title, defined?(admin) ? [:admin, post] : post %>
+        </div>
     </blockquote>
   <div class="row show-grid">
     <div class="span10">
       <%= raw(truncate(@markdown.render(post.body), length: 200))%>
     </div>
   </div>
-  <%= button_to("Delete", post, method: :delete, class: "btn btn-danger btn-mini", data: { confirm: 'Are you sure?' }) if current_user == post.user %>
-  <p><%= render :partial => "posts/author_help", locals: { post: post } %></p>
+  <!--%= button_to("Delete", post, method: :delete, class: "btn btn-danger btn-mini",
+            data: { confirm: 'Are you sure?' }) if current_user == post.user %-->
+  <p>
+      <%= render "posts/author_help", post: post %>
+      <%= render "posts/tags", tags: post.tag_list, admin: true if defined?(:admin)  %>
+  </p>
 </div>

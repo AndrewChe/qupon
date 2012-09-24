@@ -26,7 +26,7 @@
         <%= "Posts (#{@posts.size}):" %>
         <% @posts.each do |post| %>
             <div class="well well-small">
-                <%= render partial: 'posts/short_post_partial', locals: { post: post } %>
+                <%= render 'posts/short_post_partial', post: post, admin: true %>
                 Admin tools:
                 <div class="btn-toolbar">
                     <%= link_to 'Edit', [:edit, :admin, post], controller: :admin_posts, class: "btn btn-warning btn-mini" %>
@@ -39,12 +39,7 @@
         <%= "Comments (#{@comments.size}):" %>
         <% @comments.each do |comment| %>
             <div class="well well-small">
-                <%= render partial: 'comments/short_comment', locals: { comment: comment, post: comment.post } %>
-                Admin tools:
-                <div class="btn-toolbar">
-                    <%= link_to 'Edit', [:edit, :admin, comment], controller: :admin_comments, class: "btn btn-warning btn-mini" %>
-                    <%= link_to("Delete", [:admin, comment], method: :delete, class: "btn btn-danger btn-mini", data: { confirm: 'Are you sure?' }) %>
-                </div>
+                <%= render 'comments/short_comment', comment: comment, post: comment.post, admin: true %>
             </div>
         <% end %>
     </div>

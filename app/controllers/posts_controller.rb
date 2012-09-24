@@ -2,7 +2,8 @@ class PostsController < ApplicationController
   before_filter :authorize
 
   before_filter :find_post, only: [:show, :edit, :destroy, :update]
-  before_filter :create_markdown, only: [:show, :index]
+  before_filter :find_posts, only: :index
+  before_filter :create_markdown, only: [:show, :index, :tagged]
   before_filter :build_comment, only: [:show]
 
   def create
@@ -16,7 +17,7 @@ class PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.paginate(page: params[:page])
+
   end
 
   def new
@@ -47,6 +48,14 @@ class PostsController < ApplicationController
 
   def find_post
     @post = Post.find(params[:id]) || not_found
+  end
+
+  def find_posts
+    if params[:tag]
+      @posts = Post.tagged_with(params[:tag]).paginate(page: params[:page])
+    else
+      @posts = Post.paginate(page: params[:page], order: "created_at DESC")
+    end
   end
 
   def successful_create_update

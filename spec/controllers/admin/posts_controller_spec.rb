@@ -5,7 +5,8 @@ describe Admin::PostsController do
   let!(:pupkin) { create(:user, admin: true) }
   let!(:hacker) { create(:user, email: "hacker@hack.er") }
   let!(:article) { create(:post, user_id: hacker.id) }
-  let!(:comment) { create(:comment, user_id: hacker.id, post_id: article.id) }
+  let!(:comment) { create(:comment, user_id: hacker.id, commentable: article) }
+  let!(:reply) { create(:comment, user_id: hacker.id, commentable: comment) }
 
   describe "GET 'index'" do
     context "user is admin"
@@ -25,18 +26,21 @@ describe Admin::PostsController do
   end
 
   describe "DESTROY post" do
-    context "user is admin"
-    it "should delete post with comments" do
-      sign_in_as(pupkin)
-      expect { delete :destroy, id: article.id }.to change { Post.count }.by(-1)
+    context "user is admin" do
+      it "should delete post with comments" do
+        sign_in_as(pupkin)
+        expect { delete :destroy, id: article.id }.to change { Post.count }.by(-1)
 
+      end
     end
 
-    context "user isn't admin"
-    it "should NOT delete post" do
-      sign_in_as(hacker)
-      expect { delete :destroy, id: article.id }.to_not change { Post.count }
 
+    context "user isn't admin" do
+      it "should NOT delete post" do
+        sign_in_as(hacker)
+        expect { delete :destroy, id: article.id }.to_not change { Post.count }
+
+      end
     end
   end
 

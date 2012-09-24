@@ -1,0 +1,5 @@
+Admin tools:
+<div class="btn-toolbar">
+    <%= link_to 'Edit', [:edit, :admin, comment], controller: :admin_comments, class: "btn btn-warning btn-mini" %>
+    <%= link_to("Delete", [:admin, comment], method: :delete, class: "btn btn-danger btn-mini", data: { confirm: 'Are you sure?' }) %>
+</div>

@@ -4,7 +4,7 @@ require 'factories/factories'
 describe PostsController do
   let!(:pupkin) { create(:user) }
   let!(:article) { create(:post, user: pupkin) }
-  let!(:comment) { create(:comment, post: article, user: pupkin)}
+  let!(:comment) { create(:comment, commentable: article, user: pupkin)}
 
   before(:each) do
     sign_in_as(pupkin)

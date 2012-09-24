@@ -7,7 +7,10 @@
     <p id="post_body"><%= raw(@markdown.render(@post.body)) %></p>
 </div>
 <div class="span12">
-    <p><%= render :partial => "posts/author_help", locals: { post: @post } %></p>
+    <p>
+        <%= render :partial => "posts/author_help", locals: { post: @post } %>
+        <%= render "posts/tags", tags: @post.tag_list, admin: true %>
+    </p>
 
     <div class="well well-small">
         Admin tools:
@@ -23,13 +26,8 @@
         Comments:
         <% @comments.each do |comment| %>
             <div class="well well-small">
-            <%= render "comments/comment_partial", comment: comment %>
-            Admin tools:
-            <div class="btn-toolbar">
-                <%= link_to 'Edit', [:edit, :admin, comment], controller: :admin_comments, class: "btn btn-warning btn-mini" %>
-                <%= link_to("Delete", [:admin, comment], method: :delete, class: "btn btn-danger btn-mini", data: { confirm: 'Are you sure?' }) %>
+                <%= render "comments/comment_partial", comment: comment, admin: true %>
             </div>
-        </div>
     <% end %>
     <%= will_paginate @comments %>
 

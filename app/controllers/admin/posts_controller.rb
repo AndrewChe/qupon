@@ -1,10 +1,10 @@
 #require "admin/AdminController"
 class Admin::PostsController < Admin::AdminController
   before_filter :admin_authorize, :create_markdown
+  before_filter :find_posts, only: :index
   before_filter :find_post, only: [:show, :edit, :destroy, :update]
 
   def index
-    @posts = Post.paginate(page: params[:page])
   end
 
   def show
@@ -15,7 +15,7 @@ class Admin::PostsController < Admin::AdminController
   end
 
   def destroy
-    redirect_to @post.delete_by_admin ? admin_posts_path : @post
+    redirect_to @post.delete_by_admin ? admin_posts_path : [:admin, @post]
   end
 
   def create
@@ -36,6 +36,14 @@ class Admin::PostsController < Admin::AdminController
   private
   def find_post
     @post = Post.find(params[:id])
+  end
+
+  def find_posts
+    if params[:tag]
+      @posts = Post.tagged_with(params[:tag]).paginate(page: params[:page])
+    else
+      @posts = Post.paginate(page: params[:page], order: "created_at DESC")
+    end
   end
 
   def successful_create_update

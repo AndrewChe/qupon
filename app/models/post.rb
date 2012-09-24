@@ -1,5 +1,8 @@
 class Post < ActiveRecord::Base
-  attr_accessible :body, :title
+
+  acts_as_taggable
+
+  attr_accessible :body, :title, :tag_list
   belongs_to :user
   has_many :comments, as: :commentable
 
@@ -16,7 +19,11 @@ class Post < ActiveRecord::Base
   end
 
   def delete_by_admin
-    commentable.destroy_all
+    if comments.any?
+      comments.each do |comment|
+        comment.delete_by_admin
+      end
+    end
     self.destroy
   end
 
@@ -24,10 +31,20 @@ class Post < ActiveRecord::Base
     self.update_attributes(options)
   end
 
+  def comments_count
+    count = 0
+    if comments.any?
+      comments.each do |comment|
+        count += comment.all_reply_count
+      end
+    end
+    count += comments.size
+  end
+
   private
 
   def ensure_have_not_comments
-     if commentable.any?
+     if comments(true).any?
        errors.add(:base, 'Comments present. You cannot delete post')
        false
      end
