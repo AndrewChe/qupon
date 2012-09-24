@@ -1,0 +1,4 @@
+<% tags.each do |tag| %>
+    <%= link_to("#{tag}", defined?(:admin) ? admin_posts_path(tag: tag) : posts_path(tag: tag),
+                class: "label label-info") %> </span>
+<% end %>
