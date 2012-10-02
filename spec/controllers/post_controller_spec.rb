@@ -15,6 +15,13 @@ describe PostsController do
       get :index
       assigns(:posts).should eq([article])
     end
+
+    it "should show all posts with some tag" do
+      tagged_article = create(:post, user: pupkin, tag_list: "some tag, js")
+      tagged_article2 = create(:post, user: pupkin, tag_list: "ruby, js")
+      get :index, tag: "some tag"
+      assigns(:posts).should eq([tagged_article])
+    end
   end
 
   describe "show" do

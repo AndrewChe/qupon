@@ -1,6 +1,6 @@
 <div class="well well-small">
     <blockquote>
-        <abbr title="commentaries"><span class="badge badge-info"><%= post.comments_count %></span></abbr>
+        <abbr title="commentaries"><span class="badge badge-info"><%= post.comments_count %></abbr>
         <div class="span10">
             <%= link_to post.title, defined?(admin) ? [:admin, post] : post %>
         </div>
@@ -14,6 +14,10 @@
             data: { confirm: 'Are you sure?' }) if current_user == post.user %-->
   <p>
       <%= render "posts/author_help", post: post %>
-      <%= render "posts/tags", tags: post.tag_list, admin: true if defined?(:admin)  %>
+      <% if defined?(admin) %>
+          <%= render "posts/tags", tags: post.tag_list, admin: true %>
+      <% else %>
+          <%= render "posts/tags", tags: post.tag_list  %>
+      <% end %>
   </p>
 </div>

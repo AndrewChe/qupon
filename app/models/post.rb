@@ -14,7 +14,11 @@ class Post < ActiveRecord::Base
 
   self.per_page = 10
 
-  def delete(current_user)
+  def to_param
+    "#{id}-#{title.parameterize}"
+  end
+
+  def delete_by_author(current_user)
     self.destroy    if user==current_user
   end
 

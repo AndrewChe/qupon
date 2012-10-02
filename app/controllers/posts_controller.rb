@@ -41,7 +41,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    redirect_to @post.delete(current_user) ?  posts_path : @post
+    redirect_to @post.delete_by_author(current_user) ?  posts_path : @post
   end
 
   private
@@ -52,7 +52,7 @@ class PostsController < ApplicationController
 
   def find_posts
     if params[:tag]
-      @posts = Post.tagged_with(params[:tag]).paginate(page: params[:page])
+      @posts = Post.tagged_with(params[:tag]).paginate(page: params[:page], order: "created_at DESC")
     else
       @posts = Post.paginate(page: params[:page], order: "created_at DESC")
     end

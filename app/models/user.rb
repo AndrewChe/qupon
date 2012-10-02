@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
   attr_accessible :last_name, :name, :nick_name, :photo, :password, :email
 
-  has_attached_file :photo, :styles => { :medium => "300x300>", :thumb => "100x100>" }
+  has_attached_file :photo, styles: { medium: "300x300>", thumb: "100x100>" }
 
   has_many :posts
   has_many :comments
@@ -24,6 +24,10 @@ class User < ActiveRecord::Base
       comment.commentable = parent
       comment.save
     end
+  end
+
+  def to_param
+    "#{id}-#{name.parameterize}"
   end
 
   def delete_by_admin

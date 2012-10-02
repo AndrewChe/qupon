@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment.delete(current_user)
+    @comment.delete_by_author(current_user)
     redirect_to_post
   end
 

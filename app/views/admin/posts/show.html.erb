@@ -8,7 +8,7 @@
 </div>
 <div class="span12">
     <p>
-        <%= render :partial => "posts/author_help", locals: { post: @post } %>
+        <%= render "posts/author_help", post: @post %>
         <%= render "posts/tags", tags: @post.tag_list, admin: true %>
     </p>
 

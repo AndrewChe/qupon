@@ -13,7 +13,7 @@
       <%= link_to("Delete", @post, method: :delete, class: "btn btn-danger btn-mini", data: { confirm: 'Are you sure?' }) %>
     </div>
     <% end %>
-  <p><%= render :partial => "posts/author_help", locals: { post: @post } %>
+  <p><%= render "posts/author_help", post: @post %>
      <%= render "posts/tags", tags: @post.tag_list %>
   </p>
 </div>

@@ -1,46 +1,15 @@
-<%= form_for [:admin, @user], :html => { :class => 'form-horizontal' } do |f| %>
-    <div class="control-group">
-        <%= f.label :name, :class => 'control-label' %>
-        <div class="controls">
-            <%= f.text_field :name, :class => 'text_field' %>
-        </div>
-    </div>
-    <div class="control-group">
-        <%= f.label :last_name, :class => 'control-label' %>
-        <div class="controls">
-            <%= f.text_field :last_name, :class => 'text_field' %>
-        </div>
-    </div>
-    <div class="control-group">
-        <%= f.label :nick_name, :class => 'control-label' %>
-        <div class="controls">
-            <%= f.text_field :nick_name, :class => 'text_field' %>
-        </div>
-    </div>
-    <div class="control-group">
-        <%= f.label :email, :class => 'control-label' %>
-        <div class="controls">
-            <%= f.text_field :email, :class => 'text_field' %>
-        </div>
-    </div>
+<%= form_for [:admin, @user], html: { class: 'form-horizontal' } do |f| %>
 
     <div class="control-group">
-        <%= f.label :password, :class => 'control-label' %>
+        <%= f.label :admin, class: 'control-label' %>
         <div class="controls">
-            <%= f.text_field :password, :class => 'text_field' %>
-        </div>
-    </div>
-
-    <div class="control-group">
-        <%= f.label :admin, :class => 'control-label' %>
-        <div class="controls">
-            <%= f.check_box :admin, :class => 'check box' %>
+            <%= f.check_box :admin, class: 'check box' %>
         </div>
     </div>
 
     <div class="form-actions">
         <%= f.submit nil, :class => 'btn btn-primary' %>
-        <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                    url_for(:back), :class => 'btn' %>
+        <%= link_to t('.cancel', default: t("helpers.links.cancel")),
+                    url_for(:back), class: 'btn' %>
     </div>
 <% end %>

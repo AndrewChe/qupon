@@ -7,11 +7,16 @@ describe Comment do
   let!(:comment) { create(:comment, commentable: article, user: pupkin) }
 
   it "should delete itself if it was created by current user" do
-    expect { comment.delete(pupkin) }.to change { Comment.count }.by(-1)
+    expect { comment.delete_by_author(pupkin) }.to change { Comment.count }.by(-1)
+  end
+
+  it "should NOT delete itself if it was created by current user but has any comments" do
+    create(:comment, commentable: comment, user: hacker)
+    expect { comment.delete_by_author(pupkin) }.not_to change { Comment.count }.by(-1)
   end
 
   it "should NOT delete itself if it was created by another user" do
-    expect { comment.delete(hacker) }.to change { Comment.count }.by(0)
+    expect { comment.delete_by_author(hacker) }.to change { Comment.count }.by(0)
   end
 
   it "should edit itself if it was created by current user" do

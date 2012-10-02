@@ -1,7 +1,7 @@
 <div class="well">
   <%= raw(@markdown.render(comment.body)) %>
   <p><%= render "posts/author_help", post: comment %></p>
-    <% if current_user == comment.user %>
+    <% if (current_user == comment.user) && (not(defined?(admin)))%>
         <div class="btn-toolbar">
             <%= link_to 'Edit', [:edit, comment.post, comment], controller: :comments,
                         class: "btn btn-warning btn-mini"  %>
@@ -14,7 +14,11 @@
 
     <%= link_to "Reply", new_comment_comment_path(comment) %>
     <% comment.comments.each do |comment| %>
-            <%= render "comments/comment_partial", comment: comment, admin: true if defined?(admin)  %>
+        <% if defined?(admin) %>
+            <%= render "comments/comment_partial", comment: comment, admin: true   %>
+        <% else %>
+            <%= render "comments/comment_partial", comment: comment %>
+        <% end %>
     <% end %>
 </div>
 

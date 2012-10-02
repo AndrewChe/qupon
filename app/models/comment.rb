@@ -19,7 +19,7 @@ class Comment < ActiveRecord::Base
     self.user == user
   end
 
-  def delete(current_user)
+  def delete_by_author(current_user)
     self.destroy if author?(current_user)
   end
 
